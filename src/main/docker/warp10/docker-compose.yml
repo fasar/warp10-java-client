@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+    warp10-test:
+        container_name: warp10-test
+        image: warp10io/warp10:2.10.1-ci
+        environment:
+            - WARP10_HEAP=6g 
+            - WARP10_HEAP_MAX=6g
+        ports: 
+            - 8080:8080
+        volumes: 
+            - ./data/warp10/etc:/data/etc
+            - ./data/warp10/leveldb:/data/leveldb
+            - ./data/warp10/logs:/data/logs
+            - ./data/warp10/macros:/data/macros
+            - ./data/warp10/warpscripts:/data/warpscripts

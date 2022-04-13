@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Warp10Test {
 
-    private static final String ENDPOINT_URL = "http://hello";
+    private static final String ENDPOINT_URL = "http://localhost:8080";
     private HttpTestClient testClient;
     private GTSInput input;
 
@@ -48,9 +48,9 @@ class Warp10Test {
                 .withReadToken("1234567890")
                 .fetch("world");
 
-        warp10.send();
+        HttpResponse<String> send = warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/fetch?world"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/fetch?world"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("GET");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("1234567890");
     }
@@ -84,7 +84,7 @@ class Warp10Test {
 
         warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/update"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/update"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("908766");
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
@@ -112,7 +112,7 @@ class Warp10Test {
 
         warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/update"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/update"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("908766");
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("application/gzip");
@@ -137,7 +137,7 @@ class Warp10Test {
 
         warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/delete?selector=~t.t.%7Bb=4%7D&start=2015-09-02T12:00:00Z"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/delete?selector=~t.t.%7Bb=4%7D&start=2015-09-02T12:00:00Z"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("GET");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("ER5446");
     }
@@ -161,7 +161,7 @@ class Warp10Test {
 
         warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/exec"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/exec"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).isEmpty();
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
@@ -176,7 +176,7 @@ class Warp10Test {
 
         warp10.send();
 
-        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/exec"));
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://localhost:8080/exec"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).isEmpty();
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
