@@ -4,6 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>warp10-java-client</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>wjc-core</module>
+    </modules>
     <groupId>fr.avalonlab.warp10</groupId>
     <version>1.5-SNAPSHOT</version>
 
@@ -24,7 +28,7 @@
         <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
       <tag>HEAD</tag>
   </scm>
-         
+
     <repositories>
     <repository>
         <id>gitlab-maven</id>
@@ -46,10 +50,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.source.version>11</java.source.version>
-
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <java.source.version>8</java.source.version>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
 
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <assertj.core.version>3.13.2</assertj.core.version>
@@ -58,17 +61,16 @@
 
     <dependencies>
         <!-- Javax Modules -->
-        <!--dependency>
+        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
-        </dependency-->
-            <!-- Until official release -->
+        </dependency>
+        <!-- Until official release -->
         <dependency>
-            <groupId>com.jwebmp</groupId>
+            <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>1.1</version>
-            <type>jar</type>
+            <version>1</version>
         </dependency>
 
         <!-- Tests -->
@@ -114,7 +116,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
-                        <release>11</release>
+                        <release>${java.source.version}</release>
                     </configuration>
                 </plugin>
             </plugins>
