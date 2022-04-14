@@ -8,6 +8,7 @@
     <modules>
         <module>wjc-core</module>
         <module>wjc-java11</module>
+        <module>wjc-httpcomponent</module>
     </modules>
     <groupId>fr.avalonlab.warp10</groupId>
     <version>1.5-SNAPSHOT</version>
