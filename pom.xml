@@ -7,6 +7,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>wjc-core</module>
+        <module>wjc-java11</module>
     </modules>
     <groupId>fr.avalonlab.warp10</groupId>
     <version>1.5-SNAPSHOT</version>
@@ -59,54 +60,7 @@
         <jacoco.agent.version>0.8.5</jacoco.agent.version>
     </properties>
 
-    <dependencies>
-        <!-- Javax Modules -->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
-        <!-- Until official release -->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
 
-        <!-- Tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.agent</artifactId>
-            <version>${jacoco.agent.version}</version>
-            <classifier>runtime</classifier>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 
     <build>
         <pluginManagement>
