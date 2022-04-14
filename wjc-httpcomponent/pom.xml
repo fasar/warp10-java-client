@@ -20,12 +20,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>fr.avalonlab.warp10</groupId>
+            <artifactId>wjc-core</artifactId>
+            <version>1.5-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
-
-
 
         <!-- Tests -->
         <dependency>
@@ -59,5 +63,6 @@
             <classifier>runtime</classifier>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 </project>
