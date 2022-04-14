@@ -2,9 +2,9 @@ package fr.avalonlab.warp10.utils;
 
 import fr.avalonlab.warp10.exceptions.MissingMandatoryDataException;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -40,7 +40,13 @@ public class WFormat {
     }
 
     public static String formatToInputData(String value) {
-        String escaped = URLEncoder.encode(value, StandardCharsets.UTF_8);;
+        String escaped = null;
+        try {
+            escaped = URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            // Not Possible
+        }
+        ;
         String res = "'" + escaped + "'";
         return res;
     }
