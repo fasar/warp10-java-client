@@ -2,6 +2,9 @@ package fr.avalonlab.warp10;
 
 public class WarpConst {
     public static final String HTTP_WARP_10_TOKEN_HEADER = "X-Warp10-Token";
+    public static final String HTTP_WARPSCRIPT_CONTENT_HEADER = "Content-Type";
+    public static final String HTTP_WARPSCRIPT_CONTENT_TEXT_HEADER = "text/plain; charset=UTF-8";
+    public static final String HTTP_WARPSCRIPT_CONTENT_GZIP_HEADER = "application/gzip";
 
     public static final String HTTP_ENDPOINT_UPDATE = "/api/v0/update";
     public static final String HTTP_ENDPOINT_FETCH = "/api/v0/fetch";

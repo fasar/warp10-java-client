@@ -1,5 +1,6 @@
 package fr.avalonlab.warp10.lowlevel;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -22,5 +23,12 @@ class Warp10SyncApacheHttpClientTest {
                 "1382441387792000/51.501988:0.005953/ some.sensor.model.humidity{xbeeId=XBee_40670F0D,moteId=53,area=1} 66.66\n" +
                 "1382441387792000/51.501988:0.005953/ some.sensor.model.humidity{xbeeId=XBee_40670F0D,moteId=53,area=1} 65.73").split("\n"));
         client.ingress(elems);
+    }
+
+    @Test
+    void execute_warpscript() {
+        Warp10SyncApacheHttpClient client = new Warp10SyncApacheHttpClient("localhost:8080", "readTokenCI", "writeTokenCI", Duration.ofMinutes(1));
+        String exec = client.exec("'é' DUP SIZE");
+        Assertions.assertEquals("[1,\"\\u00E9\"]", exec);
     }
 }

@@ -69,21 +69,38 @@ public class Warp10SyncApacheHttpClient implements Warp10Sync {
 
     @Override
     public String exec(String warpScript) throws W10ServerException {
-        return null;
+        try (final CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            final HttpPost httppost = new HttpPost(warpUrl + WarpConst.HTTP_ENDPOINT_EXEC);
+            httppost.addHeader(WarpConst.HTTP_WARPSCRIPT_CONTENT_HEADER, WarpConst.HTTP_WARPSCRIPT_CONTENT_TEXT_HEADER);
+            final StringEntity reqEntity = new StringEntity(warpScript, StandardCharsets.UTF_8);
+            httppost.setEntity(reqEntity);
+
+            try (CloseableHttpResponse response = httpclient.execute(httppost)) {
+                // Get hold of the response entity
+                final HttpEntity entity = response.getEntity();
+                System.out.println("----------------------------------------");
+                StatusLine statusLine = response.getStatusLine();
+                System.out.println(statusLine.getStatusCode() + " " + statusLine.getReasonPhrase());
+                String res = EntityUtils.toString(entity);
+                return res;
+            }
+        } catch (IOException e) {
+            throw new W10ServerException(e.getMessage(), e);
+        }
     }
 
     @Override
     public void delete(WSelector selector, Instant start, Instant end) throws W10ServerException {
-
+        throw new W10ServerException("Not Implemented");
     }
 
     @Override
     public void deleteAll(WSelector selector) throws W10ServerException {
-
+        throw new W10ServerException("Not Implemented");
     }
 
     @Override
     public Stream<GTSFullText> fetchData(WSelector selector, boolean dedup, Instant start, Instant end) throws W10ServerException {
-        return null;
+        throw new W10ServerException("Not Implemented");
     }
 }
