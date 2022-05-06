@@ -1,6 +1,7 @@
 package fr.avalonlab.warp10.model;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Objects;
  * Selector is composed with a name, labels, attributes in the format : NAME{LABELS}{ATTRIBUTES}
  * </p>
  * <p>
- *     For example:  <code>foo{label0=val0,label1=val1}{attrib1=val2,attrib2=val3}</code>
+ * For example:  <code>foo{label0=val0,label1=val1}{attrib1=val2,attrib2=val3}</code>
  * </p>
  * <ul>
  *     <li> Name: is the Name or Class name.
@@ -71,6 +72,46 @@ public class WSelector {
     public int hashCode() {
         return Objects.hash(className, labels, attributes);
     }
+
+    /**
+     * Return the WSelector for Warp10.
+     * <p>
+     * For example:  <code>foo{label0=val0,label1=val1}{attrib1=val2,attrib2=val3}</code>
+     * </p>
+     *
+     * @return
+     */
+    public String toWarp10() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(className);
+        sb.append("{");
+        if (labels != null && labels.size() > 0) {
+            mapToString(sb, labels);
+        }
+        sb.append("}");
+        if (attributes != null && !attributes.isEmpty()) {
+            sb.append("{");
+            mapToString(sb, attributes);
+            sb.append("}");
+        }
+        return sb.toString();
+    }
+
+
+    private void mapToString(StringBuilder sb, HashMap<String, String> map) {
+        boolean isFirst = true;
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                sb.append(",");
+            }
+            sb.append(entry.getKey());
+            sb.append("=");
+            sb.append(entry.getValue());
+        }
+    }
+
 
     @Override
     public String toString() {

@@ -1,16 +1,14 @@
 package fr.avalonlab.warp10.lowlevel;
 
 import fr.avalonlab.warp10.exceptions.W10ServerException;
-import fr.avalonlab.warp10.lowlevel.model.GTSFullText;
 import fr.avalonlab.warp10.model.WSelector;
 
 import java.time.Instant;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Low level Warp10 client to dialog with a Warp10 Server
- *
  */
 public interface Warp10Sync {
 
@@ -40,25 +38,21 @@ public interface Warp10Sync {
     String exec(String warpScript) throws W10ServerException;
 
     /**
-     *
      * Delete the data of the selector during the period from start to end.
-     *
+     * <p>
      * https://warp10.io/content/03_Documentation/03_Interacting_with_Warp_10/07_Deleting_data
      *
-     *
-     * @param selector  Selector of the timeseries
-     * @param start     Instant to start the delete
+     * @param selector Selector of the timeseries
+     * @param start    Instant to start the delete
      * @param end
      * @throws W10ServerException
      */
     void delete(WSelector selector, Instant start, Instant end) throws W10ServerException;
 
     /**
-     *
      * Delete all the data of the selector
-     *
+     * <p>
      * https://warp10.io/content/03_Documentation/03_Interacting_with_Warp_10/07_Deleting_data
-     *
      *
      * @param selector Selector of the timeseries
      * @throws W10ServerException
@@ -84,6 +78,6 @@ public interface Warp10Sync {
      * @param end      the start and end timestamps defining the interval of the GTS to fetch. They are both in ISO8601 format, i.e. YYYY-MM-DDTHH:MM:SS.SSSSSSZ.
      * @return
      */
-    Stream<GTSFullText> fetchData(WSelector selector, boolean dedup, Instant start, Instant end) throws W10ServerException;
+    Iterator<String> fetchData(WSelector selector, boolean dedup, FETCH_FORMAT format, Instant start, Instant end) throws W10ServerException;
 
 }

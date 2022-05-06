@@ -7,6 +7,7 @@ import fr.avalonlab.warp10.model.WSelector;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -14,12 +15,14 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Warp10SyncApacheHttpClient implements Warp10Sync {
     private String warpUrl;
@@ -99,8 +102,48 @@ public class Warp10SyncApacheHttpClient implements Warp10Sync {
         throw new W10ServerException("Not Implemented");
     }
 
+
+
     @Override
-    public Stream<GTSFullText> fetchData(WSelector selector, boolean dedup, Instant start, Instant end) throws W10ServerException {
-        throw new W10ServerException("Not Implemented");
+    public Iterator<String> fetchData(WSelector selector, boolean dedup, FETCH_FORMAT format, Instant start, Instant end) throws W10ServerException {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("selector", selector.toWarp10());
+        if (dedup) {
+            params.put("dedup", "true");
+        }
+        params.put("format", format.toWarp10());
+        params.put("start", start.toString());
+        params.put("end", end.toString());
+
+        String encodedURL = params.keySet().stream()
+                .map(key -> key + "=" + encodeValue(params.get(key)))
+                .collect(Collectors.joining("&", warpUrl + WarpConst.HTTP_ENDPOINT_FETCH+ "?", ""));
+
+        try (final CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            final HttpGet httpget = new HttpGet(encodedURL);
+            httpget.addHeader(WarpConst.HTTP_WARP_10_TOKEN_HEADER, readToken);
+
+            try (CloseableHttpResponse response = httpclient.execute(httpget)) {
+                // Get hold of the response entity
+                final HttpEntity entity = response.getEntity();
+                System.out.println("----------------------------------------");
+                StatusLine statusLine = response.getStatusLine();
+                System.out.println(statusLine.getStatusCode() + " " + statusLine.getReasonPhrase());
+                String res = EntityUtils.toString(entity);
+                String[] split = res.split("\n");
+                List<String> lines = Arrays.asList(split);
+                return lines.iterator();
+            }
+        } catch (IOException e) {
+            throw new W10ServerException(e.getMessage(), e);
+        }
+    }
+
+    private String encodeValue(String value) {
+        try {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            throw new W10ServerException("Can't uir encode " + value);
+        }
     }
 }
